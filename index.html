@@ -1,128 +1,126 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sharma Prime Properties - Kolkata</title>
-  <link rel="icon" href="logo.png.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sharma Prime Properties</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f2f2f2;
+      background: #f9f9f9;
       margin: 0;
       padding: 0;
-    }
-    header {
-      background: #222;
-      color: white;
-      padding: 20px;
       text-align: center;
     }
+
+    header {
+      background-color: #1f2937;
+      color: white;
+      padding: 10px;
+    }
+
     header img {
       height: 60px;
     }
-    .intro {
-      text-align: center;
-      padding: 15px;
-      font-size: 20px;
+
+    h1 {
+      margin: 10px 0;
     }
-    .property-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-      padding: 20px;
+
+    .property-types {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 20px 0;
+      gap: 15px;
     }
+
     .property {
+      width: 100px;
+      padding: 10px;
       background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      box-shadow: 0 0 5px gray;
+      font-size: 18px;
+      font-weight: bold;
     }
-    .property img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
+
+    .buttons {
+      margin: 20px 0;
     }
-    .property-details {
-      padding: 15px;
+
+    .buttons a {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 5px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
     }
-    .property-details h3 {
-      margin-top: 0;
+
+    .call { background: #28a745; }
+    .whatsapp { background: #25D366; }
+
+    iframe {
+      width: 90%;
+      height: 550px;
+      border: none;
+      margin-top: 20px;
     }
-    .btns {
+
+    footer {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .social a {
+      margin: 0 10px;
+      color: #1877f2;
+      font-weight: bold;
+    }
+
+    .info {
       margin-top: 10px;
     }
-    .btns button {
-      padding: 10px 15px;
-      margin-right: 10px;
-      border: none;
-      background: #007bff;
-      color: white;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    footer {
-      background: #333;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 30px;
-    }
+
   </style>
 </head>
 <body>
 
-<header>
-  <img src="logo.png.png" alt="Sharma Prime Properties Logo">
-  <h1>Sharma Prime Properties</h1>
-  <p>Newtown, Kolkata 700156</p>
-</header>
+  <header>
+    <img src="logo.png.png" alt="Logo" />
+    <h1>Sharma Prime Properties</h1>
+    <p>Your Trusted Real Estate Partner in Newtown, Kolkata</p>
+  </header>
 
-<div class="intro">
-  <p><strong>Room, Flat, Building, Land, Commercial, Home – Sell or Rent Available</strong></p>
-  <p>CEO: Ashutosh Sharma</p>
-  <p>
-    <a href="https://facebook.com/share/12K3ktfpkxi/" style="color: blue;">Facebook</a>
-  </p>
-</div>
-
-<section class="property-grid">
-
-  <!-- Property 1 -->
-  <div class="property">
-    <img src="https://via.placeholder.com/300x200" alt="Flat Image">
-    <div class="property-details">
-      <h3>1BHK Flat for Rent</h3>
-      <p>Location: Newtown, Kolkata</p>
-      <p>Rent: ₹9,500/month</p>
-      <div class="btns">
-        <button onclick="window.location.href='tel:+919007869357'">Call Now</button>
-        <button onclick="window.location.href='https://wa.me/919007869357'">WhatsApp</button>
-      </div>
-    </div>
+  <div class="property-types">
+    <div class="property">1 Room</div>
+    <div class="property">2 BHK</div>
+    <div class="property">3 BHK</div>
+    <div class="property">4 BHK</div>
+    <div class="property">5 BHK</div>
+    <div class="property">6 BHK</div>
   </div>
 
-  <!-- Property 2 -->
-  <div class="property">
-    <img src="https://via.placeholder.com/300x200" alt="Land Image">
-    <div class="property-details">
-      <h3>Plot for Sale</h3>
-      <p>Location: Rajarhat, Kolkata</p>
-      <p>Price: ₹25 Lakh</p>
-      <div class="btns">
-        <button onclick="window.location.href='tel:+919007869357'">Call Now</button>
-        <button onclick="window.location.href='https://wa.me/919007869357'">WhatsApp</button>
-      </div>
-    </div>
+  <div class="buttons">
+    <a href="https://wa.me/919007869357" class="whatsapp" target="_blank">WhatsApp Now</a>
+    <a href="tel:+919007869357" class="call">Call Now</a>
   </div>
 
-  <!-- Add more listings below (copy & paste this block) -->
+  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfTmBWTrag8e53Y97PgzG277YYYFy9bYOuI1MVu1nSfb95vCQ/viewform?embedded=true" allowfullscreen>Loading…</iframe>
 
-</section>
-
-<footer>
-  <p>&copy; 2025 Sharma Prime Properties | All Rights Reserved</p>
-</footer>
+  <footer>
+    <div class="info">
+      <p>📍 Newtown, Kolkata - 700156</p>
+      <p>📞 +91 9007869357 | +91 9027044214</p>
+      <p>CEO: Ashutosh Sharma</p>
+    </div>
+    <div class="social">
+      <a href="https://www.facebook.com/share/12K3ktfpkxi/" target="_blank">Facebook</a>
+    </div>
+  </footer>
 
 </body>
 </html>
