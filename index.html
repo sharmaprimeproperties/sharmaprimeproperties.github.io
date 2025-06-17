@@ -1,126 +1,107 @@
- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sharma Prime Properties</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-
-    header {
-      background-color: #1f2937;
-      color: white;
-      padding: 10px;
-    }
-
-    header img {
-      height: 60px;
-    }
-
-    h1 {
-      margin: 10px 0;
-    }
-
-    .property-types {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin: 20px 0;
-      gap: 15px;
-    }
-
-    .property {
-      width: 100px;
-      padding: 10px;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 0 5px gray;
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .buttons {
-      margin: 20px 0;
-    }
-
-    .buttons a {
-      display: inline-block;
-      padding: 10px 20px;
-      margin: 10px;
-      border-radius: 5px;
-      text-decoration: none;
-      color: white;
-      font-weight: bold;
-    }
-
-    .call { background: #28a745; }
-    .whatsapp { background: #25D366; }
-
-    iframe {
-      width: 90%;
-      height: 550px;
-      border: none;
-      margin-top: 20px;
-    }
-
-    footer {
-      margin-top: 30px;
-      font-size: 14px;
-      color: #333;
-    }
-
-    .social a {
-      margin: 0 10px;
-      color: #1877f2;
-      font-weight: bold;
-    }
-
-    .info {
-      margin-top: 10px;
-    }
-
-  </style>
-</head>
-<body>
-
-  <header>
-    <img src="logo.png.png" alt="Logo" />
-    <h1>Sharma Prime Properties</h1>
-    <p>Your Trusted Real Estate Partner in Newtown, Kolkata</p>
-  </header>
-
-  <div class="property-types">
-    <div class="property">1 Room</div>
-    <div class="property">2 BHK</div>
-    <div class="property">3 BHK</div>
-    <div class="property">4 BHK</div>
-    <div class="property">5 BHK</div>
-    <div class="property">6 BHK</div>
-  </div>
-
-  <div class="buttons">
-    <a href="https://wa.me/919007869357" class="whatsapp" target="_blank">WhatsApp Now</a>
-    <a href="tel:+919007869357" class="call">Call Now</a>
-  </div>
-
-  <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfTmBWTrag8e53Y97PgzG277YYYFy9bYOuI1MVu1nSfb95vCQ/viewform?embedded=true" allowfullscreen>Loading…</iframe>
-
-  <footer>
-    <div class="info">
-      <p>📍 Newtown, Kolkata - 700156</p>
-      <p>📞 +91 9007869357 | +91 9027044214</p>
-      <p>CEO: Ashutosh Sharma</p>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sharma Prime Properties – Listings</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 95%;
+        max-width: 1100px;
+        margin: auto;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      .property {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        padding: 15px;
+        margin: 15px 0;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 15px;
+      }
+      .property img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+      .info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .info h2 {
+        margin: 0;
+        font-size: 20px;
+        color: #444;
+      }
+      .info p {
+        margin: 4px 0;
+        color: #666;
+      }
+      .info strong {
+        color: #222;
+      }
+      .contact {
+        margin-top: 10px;
+        font-weight: bold;
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Available Properties – Sharma Prime</h1>
+      <div id="listing"></div>
     </div>
-    <div class="social">
-      <a href="https://www.facebook.com/share/12K3ktfpkxi/" target="_blank">Facebook</a>
-    </div>
-  </footer>
 
-</body>
+    <script>
+      const sheetUrl = "https://docs.google.com/spreadsheets/d/1AHhN4kbVZrzrijp_c9gkf2yPgP0qAPgEoDHXLR8HItE/gviz/tq?tqx=out:json";
+
+      fetch(sheetUrl)
+        .then(res => res.text())
+        .then(data => {
+          const json = JSON.parse(data.substr(47).slice(0, -2));
+          const rows = json.table.rows;
+
+          const container = document.getElementById('listing');
+          rows.slice(1).forEach(row => {
+            const values = row.c.map(c => (c ? c.v : ''));
+            const [
+              title, location, city, price, bedrooms, bathrooms,
+              type, size, floor, furnished, parking, description,
+              phone, imageUrl
+            ] = values;
+
+            const div = document.createElement('div');
+            div.className = 'property';
+            div.innerHTML = `
+              <img src="${imageUrl || 'https://via.placeholder.com/300x200'}" alt="Property Image" />
+              <div class="info">
+                <h2>${title || 'Unnamed Property'}</h2>
+                <p><strong>Location:</strong> ${location}, ${city}</p>
+                <p><strong>Price:</strong> ₹${price}</p>
+                <p><strong>Bedrooms:</strong> ${bedrooms} | <strong>Bathrooms:</strong> ${bathrooms}</p>
+                <p><strong>Type:</strong> ${type} | <strong>Size:</strong> ${size} sqft</p>
+                <p><strong>Floor:</strong> ${floor} | <strong>Furnished:</strong> ${furnished}</p>
+                <p><strong>Parking:</strong> ${parking}</p>
+                <p>${description}</p>
+                <div class="contact">📞 Contact: 9007869357</div>
+              </div>
+            `;
+            container.appendChild(div);
+          });
+        });
+    </script>
+  </body>
 </html>
