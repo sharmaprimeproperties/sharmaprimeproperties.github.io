@@ -1,84 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Available Properties - Sharma Prime Properties</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Available Properties | Sharma Prime Properties</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f2f2f2;
+      background: #f7f7f7;
       margin: 0;
-      padding: 0;
+      padding: 20px;
     }
     h1 {
       text-align: center;
-      color: #222;
-      padding: 20px;
-      background-color: #ffffff;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      color: #2e3a59;
     }
-    .property-list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 20px;
-    }
-    .property-card {
+    .property {
       background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      margin: 10px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       padding: 20px;
-      width: 300px;
-      box-sizing: border-box;
+      margin: 20px auto;
+      max-width: 600px;
     }
-    .property-card img {
+    .property img {
       width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 5px;
+      height: auto;
+      border-radius: 10px;
     }
-    .property-card h2 {
-      margin-top: 10px;
-      font-size: 18px;
+    .property h3 {
+      margin: 10px 0 5px;
+      color: #222;
+    }
+    .property p {
+      margin: 5px 0;
+      color: #444;
+    }
+    .contact {
+      margin-top: 15px;
+      padding-top: 10px;
+      border-top: 1px solid #ddd;
+    }
+    .contact strong {
       color: #333;
     }
-    .property-card p {
-      margin: 5px 0;
-      font-size: 14px;
-      color: #666;
-    }
-    .contact-note {
-      font-size: 12px;
-      color: #888;
-      margin-top: 10px;
+    .contact a {
+      display: inline-block;
+      margin-top: 5px;
+      color: white;
+      background: #007bff;
+      padding: 8px 12px;
+      text-decoration: none;
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
   <h1>Available Properties - Sharma Prime Properties</h1>
-  <div class="property-list" id="propertyList"></div>
+
+  <div id="listings">Loading properties...</div>
 
   <script>
-    fetch("https://script.google.com/macros/s/AKfycbxLJ-squr7fMiew55B92-FZWQ95YwVCp7QjBSlCM3-1_E24Zhx9A7_Kaw5PcT0Dmlzt/exec")
+    const sheetURL = "https://script.google.com/macros/s/AKfycbxLJ-squr7fMiew55B92-FZWQ95YwVCp7QjBSlCM3-1_E24Zhx9A7_Kaw5PcT0Dmlzt/exec";
+
+    fetch(sheetURL)
       .then(res => res.json())
       .then(data => {
-        const list = document.getElementById("propertyList");
-        data.forEach(p => {
-          const card = document.createElement("div");
-          card.className = "property-card";
-          card.innerHTML = `
-            <img src="${p.imageURL || 'https://via.placeholder.com/300x180?text=No+Image'}" alt="Property Image">
-            <h2>${p.propertyType || 'N/A'} in ${p.city || 'City'}</h2>
-            <p><strong>Rooms:</strong> ${p.rooms || 'N/A'}</p>
-            <p><strong>Price:</strong> ₹${p.rent || 'N/A'} /month</p>
-            <p><strong>Location:</strong> ${p.location || 'N/A'}</p>
-            <p><strong>Furnishing:</strong> ${p.furnishing || 'N/A'}</p>
-            <p><strong>Floor:</strong> ${p.floor || 'N/A'}</p>
-            <p><strong>Posted By:</strong> Sharma Prime Properties</p>
-            <p class="contact-note">Contact details will be shared after booking confirmation.</p>
+        const listings = document.getElementById("listings");
+        listings.innerHTML = "";
+
+        data.forEach(item => {
+          const div = document.createElement("div");
+          div.className = "property";
+          div.innerHTML = `
+            <img src="${item.image || 'https://via.placeholder.com/600x300?text=No+Image'}" alt="Property Image"/>
+            <h3>${item.title || 'Untitled Property'}</h3>
+            <p><strong>Location:</strong> ${item.location || 'N/A'}</p>
+            <p><strong>City:</strong> ${item.city || 'N/A'}</p>
+            <p><strong>Type:</strong> ${item.type || 'N/A'}</p>
+            <p><strong>Price:</strong> ₹${item.price || 'N/A'}</p>
+            <p><strong>Rooms:</strong> ${item.rooms || 'N/A'}</p>
+            <div class="contact">
+              <strong>Contact Sharma Prime Properties</strong><br>
+              📞 9007869357<br>
+              <a href="https://forms.gle/HUbyz1bdVW8vNnML7" target="_blank">Contact Now</a>
+            </div>
           `;
-          list.appendChild(card);
+          listings.appendChild(div);
         });
+      })
+      .catch(err => {
+        document.getElementById("listings").innerHTML = "Failed to load properties.";
+        console.error(err);
       });
   </script>
 </body>
