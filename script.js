@@ -1,29 +1,46 @@
-fetch("property-data.json")
-  .then(response => {
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    return response.json();
-  })
-  .then(data => {
-    const propertyList = document.getElementById("property-list");
-    propertyList.innerHTML = ""; // Clear 'Loading...' text
+document.addEventListener("DOMContentLoaded", function () {
+    const sheetURL = "https://script.google.com/macros/s/AKfycbxLJ-squr7fMiew55B92-FZWQ95YwVCp7QjBSlCM3-1_E24Zhx9A7_Kaw5PcT0Dmlzt/exec";
 
-    data.forEach(property => {
-      const div = document.createElement("div");
-      div.className = "property";
+    const container = document.getElementById("properties-container");
 
-      div.innerHTML = `
-        <img src="${property.image}" alt="${property.title}" />
-        <h2>${property.title}</h2>
-        <p><strong>Location:</strong> ${property.location}</p>
-        <p><strong>Price:</strong> ${property.price}</p>
-      `;
+    fetch(sheetURL)
+        .then((response) => response.json())
+        .then((data) => {
+            container.innerHTML = ""; // Clear loading text
 
-      propertyList.appendChild(div);
-    });
-  })
-  .catch(error => {
-    document.getElementById("property-list").innerHTML = "Failed to load properties.";
-    console.error("Fetch error:", error);
-  });
+            data.forEach((property) => {
+                const card = document.createElement("div");
+                card.className = "property-card";
+
+                // Add image if available
+                const image = document.createElement("img");
+                image.src = property["Upload Property Images (Optional)"] || "default.jpg";
+                image.alt = "Property Image";
+                image.className = "property-image";
+
+                const title = document.createElement("h3");
+                title.textContent = property["Property Title (e.g., 2 BHK Flat in Noida)"];
+
+                const city = document.createElement("p");
+                city.textContent = `City: ${property["City"]}`;
+
+                const price = document.createElement("p");
+                price.textContent = `Price: ₹${property["Expected Rent / Sale Price (INR)"]}`;
+
+                const extra = document.createElement("p");
+                extra.textContent = property["Extra Description / Any Other Detail"] || "";
+
+                card.appendChild(image);
+                card.appendChild(title);
+                card.appendChild(city);
+                card.appendChild(price);
+                card.appendChild(extra);
+
+                container.appendChild(card);
+            });
+        })
+        .catch((error) => {
+            console.error("Error fetching data:", error);
+            container.innerHTML = "<p>Error loading properties. Please try again later.</p>";
+        });
+});
