@@ -1,0 +1,19 @@
+fetch('https://script.google.com/macros/s/AKfycbxLJ-squr7fMiew55B92-FZWQ95YwVCp7QjBSlCM3-1_E24Zhx9A7_Kaw5PcT0Dmlzt/exec')
+  .then(response => response.json())
+  .then(data => {
+    const container = document.getElementById('property-list');
+    container.innerHTML = '';
+    data.forEach(row => {
+      const div = document.createElement('div');
+      div.className = "property-card";
+      div.innerHTML = `
+        <h3>${row["Property Title (e.g., 2 BHK Flat in Noida)"]}</h3>
+        <p><strong>Type:</strong> ${row["Property Type"]}</p>
+        <p><strong>City:</strong> ${row["City"]}</p>
+        <p><strong>Location:</strong> ${row["Location / Area Name"]}</p>
+        <p><strong>Price:</strong> ₹${row["Expected Rent / Sale Price (INR)"]}</p>
+        <p><strong>Description:</strong> ${row["Extra Description / Any Other Detail"] || "N/A"}</p>
+      `;
+      container.appendChild(div);
+    });
+  }); 
