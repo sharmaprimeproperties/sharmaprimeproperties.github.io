@@ -1,17 +1,14 @@
 [
   {
-    "title": "2 BHK Flat in Noida",
-    "price": "₹15,000/month",
-    "location": "Sector 76, Noida"
+    "title": "1 BHK Flat in Noida",
+    "price": "₹12,000/month",
+    "location": "Sector 15, Noida",
+    "image": "logo.png.png"
   },
   {
-    "title": "1 RK Room in Etawah",
-    "price": "₹4,000/month",
-    "location": "Bidhupura, Etawah"
-  },
-  {
-    "title": "3 BHK Independent House",
-    "price": "₹25,000/month",
-    "location": "Gomti Nagar, Lucknow"
+    "title": "2 BHK Fully Furnished",
+    "price": "₹20,000/month",
+    "location": "Vaishali, Ghaziabad",
+    "image": "logo.png.png"
   }
 ]
