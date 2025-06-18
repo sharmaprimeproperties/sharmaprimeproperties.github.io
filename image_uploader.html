@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Property Image Upload - Sharma Prime Properties</title>
+</head>
+<body>
+  <h2>Upload Property Image</h2>
+  
+  <input type="file" id="fileInput">
+  <br><br>
+  <button onclick="uploadImage()">Upload Image</button>
+
+  <p id="uploadStatus"></p>
+  <p>Image URL: <span id="imageUrl"></span></p>
+
+  <script>
+    function uploadImage() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+
+      if (!file) {
+        alert('Please select a file first!');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset', 'unsigned_upload'); // Your preset
+
+      document.getElementById('uploadStatus').innerText = "Uploading...";
+
+      fetch("https://api.cloudinary.com/v1_1/desrvclqi/image/upload", {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        const imageUrl = data.secure_url;
+        document.getElementById('uploadStatus').innerText = "Upload Successful!";
+        document.getElementById('imageUrl').innerText = imageUrl;
+
+        // Optional: Copy to clipboard
+        navigator.clipboard.writeText(imageUrl);
+      })
+      .catch(err => {
+        console.error("Upload failed", err);
+        document.getElementById('uploadStatus').innerText = "Upload failed!";
+      });
+    }
+  </script>
+</body>
+</html>
