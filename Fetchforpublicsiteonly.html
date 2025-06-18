@@ -1,19 +1,69 @@
-fetch('https://script.google.com/macros/s/AKfycbxLJ-squr7fMiew55B92-FZWQ95YwVCp7QjBSlCM3-1_E24Zhx9A7_Kaw5PcT0Dmlzt/exec')
-  .then(response => response.json())
-  .then(data => {
-    const container = document.getElementById('property-list');
-    container.innerHTML = '';
-    data.forEach(row => {
-      const div = document.createElement('div');
-      div.className = "property-card";
-      div.innerHTML = `
-        <h3>${row["Property Title (e.g., 2 BHK Flat in Noida)"]}</h3>
-        <p><strong>Type:</strong> ${row["Property Type"]}</p>
-        <p><strong>City:</strong> ${row["City"]}</p>
-        <p><strong>Location:</strong> ${row["Location / Area Name"]}</p>
-        <p><strong>Price:</strong> ₹${row["Expected Rent / Sale Price (INR)"]}</p>
-        <p><strong>Description:</strong> ${row["Extra Description / Any Other Detail"] || "N/A"}</p>
-      `;
-      container.appendChild(div);
-    });
-  }); 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Available Properties - Sharma Prime Properties</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .property {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    .property h2 {
+      margin: 0 0 5px 0;
+      font-size: 18px;
+      color: #222;
+    }
+
+    .property p {
+      margin: 3px 0;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Available Properties - Sharma Prime Properties</h1>
+  <div id="property-list">Loading properties...</div>
+
+  <script>
+    fetch('property-data.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        const list = document.getElementById('property-list');
+        list.innerHTML = '';
+
+        data.forEach(property => {
+          const div = document.createElement('div');
+          div.className = 'property';
+          div.innerHTML = `
+            <h2>${property.title}</h2>
+            <p><strong>Price:</strong> ${property.price}</p>
+            <p><strong>Location:</strong> ${property.location}</p>
+          `;
+          list.appendChild(div);
+        });
+      })
+      .catch(error => {
+        document.getElementById('property-list').innerHTML = 'Failed to load properties.';
+        console.error('Error fetching property data:', error);
+      });
+  </script>
+</body>
+</html>
