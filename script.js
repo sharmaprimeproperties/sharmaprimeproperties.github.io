@@ -1,25 +1,29 @@
-const sheetURL = "https://script.google.com/macros/s/PASTE_YOUR_SCRIPT_URL_HERE/exec";
-
-fetch(sheetURL)
-  .then(response => response.json())
+fetch("property-data.json")
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  })
   .then(data => {
-    const container = document.getElementById("property-container");
-    container.innerHTML = ""; // Remove 'Loading...' text
+    const propertyList = document.getElementById("property-list");
+    propertyList.innerHTML = ""; // Clear 'Loading...' text
 
     data.forEach(property => {
-      const box = document.createElement("div");
-      box.className = "property-box";
-      box.innerHTML = `
+      const div = document.createElement("div");
+      div.className = "property";
+
+      div.innerHTML = `
         <img src="${property.image}" alt="${property.title}" />
-        <h3>${property.title}</h3>
-        <p>${property.description}</p>
-        <p><strong>Price:</strong> ₹${property.price}</p>
+        <h2>${property.title}</h2>
+        <p><strong>Location:</strong> ${property.location}</p>
+        <p><strong>Price:</strong> ${property.price}</p>
       `;
-      container.appendChild(box);
+
+      propertyList.appendChild(div);
     });
   })
   .catch(error => {
-    console.error("Error fetching data:", error);
-    const container = document.getElementById("property-container");
-    container.innerHTML = "Failed to load properties.";
+    document.getElementById("property-list").innerHTML = "Failed to load properties.";
+    console.error("Fetch error:", error);
   });
