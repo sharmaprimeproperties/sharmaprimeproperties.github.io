@@ -3,95 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Available Properties | Sharma Prime Properties</title>
+  <title>Available Properties - Sharma Prime</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f7f7f7;
+      background-color: #f1f1f1;
       margin: 0;
       padding: 20px;
     }
     h1 {
       text-align: center;
-      color: #2e3a59;
+      color: #2c3e50;
     }
     .property {
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      padding: 20px;
-      margin: 20px auto;
-      max-width: 600px;
-    }
-    .property img {
-      width: 100%;
-      height: auto;
       border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0px 0px 8px rgba(0,0,0,0.1);
     }
-    .property h3 {
-      margin: 10px 0 5px;
-      color: #222;
-    }
-    .property p {
-      margin: 5px 0;
-      color: #444;
-    }
-    .contact {
-      margin-top: 15px;
-      padding-top: 10px;
-      border-top: 1px solid #ddd;
-    }
-    .contact strong {
-      color: #333;
-    }
-    .contact a {
-      display: inline-block;
-      margin-top: 5px;
-      color: white;
-      background: #007bff;
-      padding: 8px 12px;
-      text-decoration: none;
-      border-radius: 6px;
+    .property h2 {
+      margin-top: 0;
+      color: #27ae60;
     }
   </style>
 </head>
 <body>
   <h1>Available Properties - Sharma Prime Properties</h1>
-
-  <div id="listings">Loading properties...</div>
+  <div id="property-list"></div>
 
   <script>
-    const sheetURL = "https://script.google.com/macros/s/AKfycbxLJ-squr7fMiew55B92-FZWQ95YwVCp7QjBSlCM3-1_E24Zhx9A7_Kaw5PcT0Dmlzt/exec";
+    const SHEET_URL = "https://script.google.com/macros/s/AKfycbxLJ-squr7fMiew55B92-FZWQ95YwVCp7QjBSlCM3-1_E24Zhx9A7_Kaw5PcT0Dmlzt/exec";
 
-    fetch(sheetURL)
+    fetch(SHEET_URL)
       .then(res => res.json())
       .then(data => {
-        const listings = document.getElementById("listings");
-        listings.innerHTML = "";
+        const container = document.getElementById("property-list");
+
+        if (data.length === 0) {
+          container.innerHTML = "<p>No properties listed yet.</p>";
+          return;
+        }
 
         data.forEach(item => {
           const div = document.createElement("div");
           div.className = "property";
           div.innerHTML = `
-            <img src="${item.image || 'https://via.placeholder.com/600x300?text=No+Image'}" alt="Property Image"/>
-            <h3>${item.title || 'Untitled Property'}</h3>
-            <p><strong>Location:</strong> ${item.location || 'N/A'}</p>
-            <p><strong>City:</strong> ${item.city || 'N/A'}</p>
-            <p><strong>Type:</strong> ${item.type || 'N/A'}</p>
-            <p><strong>Price:</strong> ₹${item.price || 'N/A'}</p>
-            <p><strong>Rooms:</strong> ${item.rooms || 'N/A'}</p>
-            <div class="contact">
-              <strong>Contact Sharma Prime Properties</strong><br>
-              📞 9007869357<br>
-              <a href="https://forms.gle/HUbyz1bdVW8vNnML7" target="_blank">Contact Now</a>
-            </div>
+            <h2>${item.PropertyType} - ₹${item.RentAmount}</h2>
+            <p><strong>Location:</strong> ${item.City}, ${item.Area}</p>
+            <p><strong>Bedrooms:</strong> ${item.BHK}</p>
+            <p><strong>Furnished:</strong> ${item.Furnished}</p>
+            <p><strong>Description:</strong> ${item.Description}</p>
+            <p><strong>Contact:</strong> 9007869357</p>
           `;
-          listings.appendChild(div);
+          container.appendChild(div);
         });
       })
       .catch(err => {
-        document.getElementById("listings").innerHTML = "Failed to load properties.";
-        console.error(err);
+        document.getElementById("property-list").innerHTML = "<p>Error loading properties.</p>";
+        console.error("Error:", err);
       });
   </script>
 </body>
