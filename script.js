@@ -1,56 +1,39 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const sheetURL = "https://script.google.com/macros/s/AKfycbxVUISwbAaUDdttTBrDCy-kSMheNA3iF3wpDz_KnaxI4aGg2Lct6ycoSRTDwDB-GLacXg/exec";
+  const sheetURL = "https://script.google.com/macros/s/AKfycbxVUISwbAaUDdttTBrDCy-kSMheNA3iF3wpDz_KnaxI4aGg2Lct6ycoSRTDwDB-GLacXg/exec";
 
-    const container = document.getElementById("properties-container");
+  const container = document.getElementById("properties-container");
 
-    fetch(sheetURL)
-        .then((response) => response.json())
-        .then((data) => {
-            container.innerHTML = ""; // Remove loading message
+  fetch(sheetURL)
+    .then((response) => response.json())
+    .then((data) => {
+      container.innerHTML = "";
 
-            if (!data || data.length === 0) {
-                container.innerHTML = "<p>No properties available right now.</p>";
-                return;
-            }
+      data.forEach((property) => {
+        const card = document.createElement("div");
+        card.className = "property-card";
 
-            data.forEach((property) => {
-                const card = document.createElement("div");
-                card.className = "property-card";
+        const title = document.createElement("h3");
+        title.textContent = property["Property Title (e.g. 2 BHK Flat in Noida)"] || "No Title";
 
-                // Image
-                const image = document.createElement("img");
-                image.src = property["Upload Property Images (Optional)"] || "logo.png.png";
-                image.alt = "Property Image";
-                image.className = "property-image";
+        const city = document.createElement("p");
+        city.textContent = `City: ${property["City"] || "Not Provided"}`;
 
-                // Title
-                const title = document.createElement("h3");
-                title.textContent = property["Property Title (e.g., 2 BHK Flat in Noida)"] || "Untitled";
+        const price = document.createElement("p");
+        price.textContent = `Price: ₹${property["Expected Rent / Sale Price (INR)"] || "N/A"}`;
 
-                // City
-                const city = document.createElement("p");
-                city.textContent = `City: ${property["City"] || "N/A"}`;
+        const agent = document.createElement("p");
+        agent.textContent = `Agent: ${property["Agent name"] || "N/A"}`;
 
-                // Price
-                const price = document.createElement("p");
-                price.textContent = `Price: ₹${property["Expected Rent / Sale Price (INR)"] || "N/A"}`;
+        card.appendChild(title);
+        card.appendChild(city);
+        card.appendChild(price);
+        card.appendChild(agent);
 
-                // Extra Info
-                const extra = document.createElement("p");
-                extra.textContent = property["Extra Description / Any Other Detail"] || "";
-
-                // Append all
-                card.appendChild(image);
-                card.appendChild(title);
-                card.appendChild(city);
-                card.appendChild(price);
-                card.appendChild(extra);
-
-                container.appendChild(card);
-            });
-        })
-        .catch((error) => {
-            console.error("Error fetching data:", error);
-            container.innerHTML = "<p>Error loading properties. Please try again later.</p>";
-        });
+        container.appendChild(card);
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+      container.innerHTML = "<p>Error loading properties. Please try again later.</p>";
+    });
 });
