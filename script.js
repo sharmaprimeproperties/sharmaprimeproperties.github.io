@@ -6,25 +6,26 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(sheetURL)
         .then((response) => response.json())
         .then((data) => {
-            container.innerHTML = "";
+            container.innerHTML = ""; // Clear loading text
 
             data.forEach((property) => {
                 const card = document.createElement("div");
                 card.className = "property-card";
 
+                // Add image if available
                 const image = document.createElement("img");
                 image.src = property["Upload Property Images (Optional)"] || "default.jpg";
                 image.alt = "Property Image";
                 image.className = "property-image";
 
                 const title = document.createElement("h3");
-                title.textContent = property["Property Title (e.g., 2 BHK Flat in Noida)"];
+                title.textContent = property["Property Title (e.g., 2 BHK Flat in Noida)"] || "No title";
 
                 const city = document.createElement("p");
-                city.textContent = `City: ${property["City"]}`;
+                city.textContent = `City: ${property["City"] || "Unknown"}`;
 
                 const price = document.createElement("p");
-                price.textContent = `Price: ₹${property["Expected Rent / Sale Price (INR)"]}`;
+                price.textContent = `Price: ₹${property["Expected Rent / Sale Price (INR)"] || "N/A"}`;
 
                 const extra = document.createElement("p");
                 extra.textContent = property["Extra Description / Any Other Detail"] || "";
