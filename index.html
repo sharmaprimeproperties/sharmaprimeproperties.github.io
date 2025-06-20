@@ -1,88 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Sharma Prime Properties</title>
-  <style>
-    body {
-      font-family: Georgia, serif;
-      background-color: #fffaf5;
-      color: #000;
-      padding: 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-    img.logo {
-      display: block;
-      margin: auto;
-      max-width: 300px;
-    }
-    h1 {
-      text-align: center;
-    }
-    .property {
-      border: 1px solid #ccc;
-      padding: 15px;
-      margin: 15px 0;
-      background-color: #fff;
-    }
-    .property img {
-      max-width: 100%;
-      height: auto;
-    }
-    a {
-      color: blue;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <img src="https://i.imgur.com/JFFSdjn.png" class="logo" alt="Sharma Prime Properties Logo" />
-  <h1>Sharma Prime Properties</h1>
-  <p><a href="https://docs.google.com/forms/d/e/1FAIpQLScffaWjH6b0yWfJvvN3er4CXsKXACj5D9AAB87rE1zl1CHuKg/viewform" target="_blank">+ List Your Property</a></p>
-  
-  <h2>Available Properties</h2>
-  <div id="properties">Loading properties...</div>
+  <header>
+    <img src="logo.png" alt="Sharma Prime Properties Logo" class="logo" />
+    <h1>Sharma Prime Properties</h1>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLScffaWjH6b0yWfJvvN3er4CXsKXACj5D9AAB87rE1zl1CHuKg/viewform" target="_blank" class="list-button">+ List Your Property</a>
+  </header>
 
-  <footer style="margin-top: 30px;">
-    <p>&copy; 2025 Sharma Prime Properties</p>
+  <main>
+    <h2>Available Properties</h2>
+    <div id="properties-container">Loading properties...</div>
+  </main>
+
+  <footer>
+    <p>© 2025 Sharma Prime Properties</p>
   </footer>
 
-  <script>
-    const sheetURL = 'https://script.google.com/macros/s/AKfycbxZVk7hRvAs0UKYJhIUbyThNLVSjmnLrT0_RXYeZFlDrIs0QgwmqB8qB1aoi6M8azoq4A/exec';
-
-    fetch(sheetURL)
-      .then(res => res.json())
-      .then(data => {
-        const container = document.getElementById('properties');
-        container.innerHTML = '';
-        
-        if (!data || data.length === 0) {
-          container.innerHTML = 'No properties listed yet.';
-          return;
-        }
-
-        data.forEach((item, index) => {
-          container.innerHTML += `
-            <div class="property">
-              <h3>${item['Property title'] || 'No Title'}</h3>
-              <p><strong>Type:</strong> ${item['Property type']}</p>
-              <p><strong>Furnishing:</strong> ${item['Furnishing']}</p>
-              <p><strong>BHK:</strong> ${item['BHK/No of rooms']}</p>
-              <p><strong>City:</strong> ${item['City']}</p>
-              <p><strong>Area:</strong> ${item['Location / Area name']}</p>
-              <p><strong>Rent/Price:</strong> ₹${item['expected rant/sale price']}</p>
-              <p><strong>Description:</strong> ${item['Extra discription']}</p>
-              <p><strong>Agent Name:</strong> ${item['Agent name']}</p>
-              <p><strong>Contact:</strong> ${item['tanant contact (heden from agent)']}</p>
-              ${item['uplode properties image'] ? `<img src="${item['uplode properties image']}" alt="Property Image">` : ''}
-            </div>
-          `;
-        });
-      })
-      .catch(error => {
-        document.getElementById('properties').innerHTML = 'Error loading properties. Please try again later.';
-        console.error('Error:', error);
-      });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
