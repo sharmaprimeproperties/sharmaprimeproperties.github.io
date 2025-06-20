@@ -6,58 +6,57 @@ body {
 }
 
 header {
-  background: #222;
-  color: #fff;
+  background: #1e88e5;
+  color: white;
   padding: 20px;
   text-align: center;
+  position: relative;
 }
 
 .logo {
   width: 60px;
-  height: auto;
-  margin-bottom: 10px;
+  position: absolute;
+  left: 20px;
+  top: 20px;
 }
 
-#properties-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+.upload-btn {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background: white;
+  color: #1e88e5;
+  padding: 10px 15px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+main {
   padding: 20px;
 }
 
+#property-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
 .property-card {
-  background: #fff;
-  border-radius: 10px;
+  background: white;
   padding: 15px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
-}
-
-.property-card:hover {
-  transform: scale(1.03);
-}
-
-.property-image {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 5px;
-  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
 
 .property-card h3 {
-  margin: 5px 0;
-}
-
-.property-card p {
-  margin: 4px 0;
-  font-size: 14px;
+  margin-top: 0;
 }
 
 footer {
   text-align: center;
   padding: 10px;
-  background: #222;
-  color: #fff;
-  font-size: 14px;
+  background: #1e88e5;
+  color: white;
+  margin-top: 20px;
 }
