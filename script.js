@@ -1,46 +1,30 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const sheetURL = "https://script.google.com/macros/s/AKfycbxVUISwbAaUDdttTBrDCy-kSMheNA3iF3wpDz_KnaxI4aGg2Lct6ycoSRTDwDB-GLacXg/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbxZVk7hRvAs0UKYJhIUbyThNLVSjmnLrT0_RXYeZFlDrIs0QgwmqB8qB1aoi6M8azoq4A/exec";
 
-    const container = document.getElementById("properties-container");
+async function fetchProperties() {
+  try {
+    const res = await fetch(scriptURL);
+    const data = await res.json();
 
-    fetch(sheetURL)
-        .then((response) => response.json())
-        .then((data) => {
-            container.innerHTML = ""; // Clear loading text
+    const container = document.getElementById("property-list");
+    container.innerHTML = "";
 
-            data.forEach((property) => {
-                const card = document.createElement("div");
-                card.className = "property-card";
+    data.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "property-card";
+      card.innerHTML = `
+        <h3>${item.PropertyName || "No Title"}</h3>
+        <p><strong>Location:</strong> ${item.Location}</p>
+        <p><strong>Rent:</strong> ₹${item.Rent}</p>
+        <p><strong>Size:</strong> ${item.Size}</p>
+        <p><strong>Type:</strong> ${item.Type}</p>
+        <p><strong>Contact:</strong> ${item.Contact}</p>
+      `;
+      container.appendChild(card);
+    });
+  } catch (err) {
+    document.getElementById("property-list").innerHTML = "Error loading properties. Please try again later.";
+    console.error("Fetch error:", err);
+  }
+}
 
-                // Add image if available
-                const image = document.createElement("img");
-                image.src = property["Upload Property Images (Optional)"] || "default.jpg";
-                image.alt = "Property Image";
-                image.className = "property-image";
-
-                const title = document.createElement("h3");
-                title.textContent = property["Property Title (e.g., 2 BHK Flat in Noida)"] || "No title";
-
-                const city = document.createElement("p");
-                city.textContent = `City: ${property["City"] || "Unknown"}`;
-
-                const price = document.createElement("p");
-                price.textContent = `Price: ₹${property["Expected Rent / Sale Price (INR)"] || "N/A"}`;
-
-                const extra = document.createElement("p");
-                extra.textContent = property["Extra Description / Any Other Detail"] || "";
-
-                card.appendChild(image);
-                card.appendChild(title);
-                card.appendChild(city);
-                card.appendChild(price);
-                card.appendChild(extra);
-
-                container.appendChild(card);
-            });
-        })
-        .catch((error) => {
-            console.error("Error fetching data:", error);
-            container.innerHTML = "<p>Error loading properties. Please try again later.</p>";
-        });
-});
+fetchProperties();
