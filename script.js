@@ -37,8 +37,3 @@ document.addEventListener("DOMContentLoaded", function () {
         container.appendChild(card);
       });
     })
-    .catch((error) => {
-      console.error("Error fetching properties:", error);
-      container.innerHTML = "<p>Error loading properties. Please try again later.</p>";
-    });
-});
